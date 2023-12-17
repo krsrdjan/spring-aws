@@ -38,11 +38,11 @@ jobs:
         env:
             PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
             HOSTNAME: ${{secrets.EC2_DNS_ADDRESS}}
-            USER_NAME: ${{secrets.EC2_USERNAME}}
+            USER_NAME: ${{ secrets.EC2_PRIVATE_KEY }}
 
         run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.EC2_PRIVATE_KEY }}@${{secrets.EC2_DNS_ADDRESS}} '
 
               # Now we have got the access of EC2 and we will start the deploy .
               cd /home/ubuntu/ &&
