@@ -33,3 +33,18 @@ jobs:
 
     - name: Upload build files to AWS instance
       run: echo TODO upload
+      
+    - name: Build & Deploy
+        env:
+            PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+            HOSTNAME: ${{secrets.EC2_DNS_ADDRESS}}
+            USER_NAME: ${{secrets.EC2_USERNAME}}
+
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+
+              # Now we have got the access of EC2 and we will start the deploy .
+              cd /home/ubuntu/ &&
+              ls -la
+              '
