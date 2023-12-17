@@ -31,9 +31,17 @@ jobs:
     - name: Execute Gradle build
       run: ./gradlew build
 
-    - name: Upload build files to AWS instance
-      run: echo "${{ secrets.EC2_USERNAME }}"
+    - name: Build & Deploy
+      env:
+            PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+            HOSTNAME: ${{secrets.EC2_DNS_ADDRESS}}
+            USER_NAME: ${{secrets.EC2_USERNAME}}
+      run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
 
-    - name: Use Secret in Script
-      run: echo "My secret value is ${{ secrets.EC2_USERNAME }}"
-      
+              # Now we have got the access of EC2 and we will start the deploy .
+              cd /home/ubuntu &&
+              ls -la
+              '
+  
