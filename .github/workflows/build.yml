@@ -38,6 +38,7 @@ jobs:
             USER_NAME: ${{secrets.EC2_USERNAME}}
       run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          scp build/libs/spring-aws-0.0.1-SNAPSHOT.jar -i private_key ${USER_NAME}@${HOSTNAME}
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
 
               # Now we have got the access of EC2 and we will start the deploy .
