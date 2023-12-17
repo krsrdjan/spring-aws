@@ -32,5 +32,8 @@ jobs:
       run: ./gradlew build
 
     - name: Upload build files to AWS instance
-      run: echo "${{ secrets.EC2_PRIVATE_KEY }}"
+      run: echo "${{ secrets.EC2_USERNAME }}"
+
+    - name: Use Secret in Script
+      run: echo "My secret value is ${{ secrets.EC2_USERNAME }}"
       
