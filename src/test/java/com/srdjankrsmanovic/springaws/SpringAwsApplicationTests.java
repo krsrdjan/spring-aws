@@ -14,11 +14,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class SpringAwsApplicationTests {
 
+
+	private final PetRepository petRepository;
+
+
 	@Autowired
-	private PetRepository petRepository;
+	public SpringAwsApplicationTests(PetRepository petRepository) {
+		this.petRepository = petRepository;
+	}
 
 	@BeforeEach
-	private void beforeEach(){
+    public void beforeEach(){
 		petRepository.deleteAll();
 	}
 
@@ -28,8 +34,8 @@ class SpringAwsApplicationTests {
 
 	@Test
 	void databaseTest() {
-		petRepository.save(new Pet(1l,"Pet1", new Date()));
-		petRepository.save(new Pet(2l,"Pet2", new Date()));
+		petRepository.save(new Pet(1L,"Pet1", new Date()));
+		petRepository.save(new Pet(2L,"Pet2", new Date()));
 		long count = petRepository.count();
 
 		assertEquals(2, count);

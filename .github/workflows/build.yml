@@ -1,4 +1,4 @@
-name: Run Gradle on PRs
+name: Build and Deploy on AWS instance
 
 # Controls when the workflow will run
 on:
@@ -31,7 +31,7 @@ jobs:
     - name: Execute Gradle build
       run: ./gradlew build
 
-    - name: Build & Deploy
+    - name: Build & Deploy on AWS instance
       env:
             PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
             HOSTNAME: ${{secrets.EC2_DNS_ADDRESS}}
